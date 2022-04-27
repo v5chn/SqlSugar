@@ -8,6 +8,6 @@ namespace ExtensionsDemo
 {
     public class Config
     {
-        public static string ConnectionString = "server=.;uid=sa;pwd=sasa;database=SqlSugar4XTest";
+        public static string ConnectionString = "server=127.0.0.1;uid=root;pwd=23e54E;database=mytools";
     }
 }

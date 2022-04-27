@@ -15,7 +15,7 @@ namespace ExtensionsDemo
             SqlSugarClient db = new SqlSugarClient(new ConnectionConfig()
             {
                 ConnectionString = Config.ConnectionString,
-                DbType = DbType.SqlServer,
+                DbType = DbType.MySql,
                 IsAutoCloseConnection = true,
                 ConfigureExternalServices = new ConfigureExternalServices()
                 {

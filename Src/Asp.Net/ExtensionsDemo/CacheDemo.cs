@@ -13,7 +13,7 @@ namespace ExtensionsDemo
         public static void Init()
         {
             HttpRuntimeCache();
-            //RedisCache();
+            RedisCache();
 
         }
 
@@ -25,7 +25,7 @@ namespace ExtensionsDemo
             SqlSugarClient db = new SqlSugarClient(new ConnectionConfig()
             {
                 ConnectionString = Config.ConnectionString,
-                DbType = DbType.SqlServer,
+                DbType = DbType.MySql,
                 IsAutoCloseConnection = true,
                 ConfigureExternalServices = new ConfigureExternalServices()
                 {
@@ -56,14 +56,15 @@ namespace ExtensionsDemo
             db.Deleteable<Student>().Where(it => it.Id == 1).RemoveDataCache().ExecuteCommand();
 
             Console.WriteLine("Cache Key Count:" + myCache.GetAllKey<string>().Count());
+            Console.ReadKey();
         }
         private static void RedisCache()
         {
-            ICacheService myCache = new RedisCache("10.1.249.196");//ICacheService
+            ICacheService myCache = new RedisCache("127.0.0.1");//ICacheService
             SqlSugarClient db = new SqlSugarClient(new ConnectionConfig()
             {
                 ConnectionString = Config.ConnectionString,
-                DbType = DbType.SqlServer,
+                DbType = DbType.MySql,
                 IsAutoCloseConnection = true,
                 ConfigureExternalServices = new ConfigureExternalServices()
                 {
@@ -71,17 +72,17 @@ namespace ExtensionsDemo
                 }
             });
 
-
+            Console.ReadKey();
             db.Queryable<Student>().Where(it => it.Id > 0).WithCache(30).ToList();
-
+            Console.ReadKey();
             db.Queryable<Student, Student>((s1, s2) => s1.Id == s2.Id).Select(s1 => s1).WithCache(30).ToList();
 
-
+            Console.ReadKey();
             db.Queryable<Student, Student>((s1, s2) => new object[] {
                 JoinType.Left,s1.Id==s2.Id
             }).Select(s1 => s1).WithCache(30).ToList();
 
-
+            Console.ReadKey();
             Console.WriteLine("Cache Key Count:" + myCache.GetAllKey<string>().Count());
 
             foreach (var item in myCache.GetAllKey<string>())
@@ -90,10 +91,11 @@ namespace ExtensionsDemo
                 Console.WriteLine(item);
                 Console.WriteLine();
             }
-
+            Console.ReadKey();
             db.Deleteable<Student>().Where(it => it.Id == 1).RemoveDataCache().ExecuteCommand();
-
+            Console.ReadKey();
             Console.WriteLine("Cache Key Count:" + myCache.GetAllKey<string>().Count());
+            Console.ReadKey();
         }
     }
 }
